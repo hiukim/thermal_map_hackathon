@@ -1,0 +1,16 @@
+<head>
+  <title>map</title>
+</head>
+
+<body>
+  <button id="render-button">Render</button>
+
+  <div class="map-container">
+    {{> googleMap name="mainMap" options=mainMapOptions}}
+  </div>
+
+  <canvas id="canvas1" style="border: 1px solid black;" width="160" height="120">
+    <br>
+    This text is displayed if your browser does not support HTML5 Canvas.
+  </canvas>
+</body>
