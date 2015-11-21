@@ -1,25 +1,11 @@
 FIREBASE_URL = "https://flironedemo.firebaseio.com/";
-FIREBASE_SECRET = 'hPLl2FZCEtzWcow7DZNrvO1BiR2HcRHkLSAHPCOh';
+// FIREBASE_SECRET = 'hPLl2FZCEtzWcow7DZNrvO1BiR2HcRHkLSAHPCOh';
 
 var firebaseFeeds = [
   FIREBASE_URL + "feed1",
   FIREBASE_URL + "feed2",
   FIREBASE_URL + "feed3"
 ]
-
-var firebaseRef;
-
-var connectFirebase = function(callback) {
-  firebaseRef = new Firebase(FIREBASE_URL);
-  callback();
-  /*
-  firebaseRef.auth(FIREBASE_SECRET, Meteor.bindEnvironment(function(error, result) {
-    console.info('Authenticated successfully with payload:', result.auth);
-    console.info('Auth expires at:', new Date(result.expires * 1000));
-    callback();
-  }));
-  */
-}
 
 START_LATITUDE = 22.282464;
 START_LONGITUDE = 114.190497;
@@ -29,6 +15,8 @@ var simulateEvent = function() {
   Meteor.setInterval(function() {
     var frame = randomFrame();
     firebaseRef.set({
+      width: frame.width,
+      height: frame.height,
       latitude: START_LATITUDE,
       longitude: START_LONGITUDE,
       altitude: START_ALTITUDE,
@@ -43,6 +31,7 @@ var observeEvent = function() {
     firebaseRef.on('value', Meteor.bindEnvironment(function(snapshot) {
       var val = snapshot.val();
       if (!val) return;
+      console.log("new feed");
       var key = firebaseRef.toString();
       _.extend(val, {key: key});
       Feed.upsert({key: key}, {
@@ -53,8 +42,7 @@ var observeEvent = function() {
 }
 
 Meteor.startup(function() {
-  connectFirebase(function() {
-    simulateEvent();
-    observeEvent();
-  });
+  Feed.remove({});
+  // simulateEvent();
+  observeEvent();
 });

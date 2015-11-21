@@ -9,15 +9,15 @@ Frame = {
     var frame = this;
     var viewWidth = 2 * Math.tan(CAMERA_WIDTH_DEGREE) * frame.altitude;
     var viewHeight = 2 * Math.tan(CAMERA_HEIGHT_DEGREE) * frame.altitude;
-    var widthPerPixel = viewWidth / RESO_WIDTH;
-    var heightPerPixel = viewHeight / RESO_HEIGHT;
+    var widthPerPixel = viewWidth / this.width;
+    var heightPerPixel = viewHeight / this.height;
 
     var mapped = [];
-    for (var index = 0; index < RESO_WIDTH * RESO_HEIGHT; index++) {
-      var y = Math.floor(index / RESO_WIDTH);
-      var x = index % RESO_WIDTH;
-      var pixelFromCenterX = x - RESO_WIDTH / 2;
-      var pixelFromCenterY = y - RESO_HEIGHT / 2;
+    for (var index = 0; index < this.width * this.height; index++) {
+      var y = Math.floor(index / this.width);
+      var x = index % this.width;
+      var pixelFromCenterX = x - this.width / 2;
+      var pixelFromCenterY = y - this.height / 2;
       var metersFromCenterX = pixelFromCenterX * widthPerPixel;
       var metersFromCenterY = pixelFromCenterY * heightPerPixel;
 
@@ -42,12 +42,16 @@ Frame = {
 }
 
 randomFrame = function() {
+  var width = RESO_WIDTH / 4;
+  var height = RESO_HEIGHT / 4;
   var latitude = 22.282464;
   var longitude = 114.190497;
   var altitude = 400; // meter
-  var heat = randomHeat(RESO_WIDTH, RESO_HEIGHT);
+  var heat = randomHeat(width, height);
 
   return _.extend({}, Frame, {
+    width: width,
+    height: height,
     latitude: latitude,
     longitude: longitude,
     altitude: altitude,
