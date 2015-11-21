@@ -1,6 +1,7 @@
 /**
- * @property center [lat, long]
- * @property altitude in Meter
+ * @property latitude
+ * @property longitude
+ * @property altitude in meters
  * @property heat Array of number
  */
 Frame = {
@@ -20,8 +21,8 @@ Frame = {
       var metersFromCenterX = pixelFromCenterX * widthPerPixel;
       var metersFromCenterY = pixelFromCenterY * heightPerPixel;
 
-      var lat = frame.center[0];
-      var lon = frame.center[1];
+      var lat = frame.latitude;
+      var lon = frame.longitude;
       var dy = -1 * metersFromCenterY;
       var dx = metersFromCenterX;
       var r_earth = 6378137;
@@ -41,12 +42,14 @@ Frame = {
 }
 
 randomFrame = function() {
-  var center = [22.282464, 114.190497];
-  var altitude = 200; // meter
+  var latitude = 22.282464;
+  var longitude = 114.190497;
+  var altitude = 400; // meter
   var heat = randomHeat(RESO_WIDTH, RESO_HEIGHT);
 
   return _.extend({}, Frame, {
-    center: center,
+    latitude: latitude,
+    longitude: longitude,
     altitude: altitude,
     heat: heat
   });

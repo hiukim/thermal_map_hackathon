@@ -4,6 +4,24 @@ START_LNG = 114.190497;
 var mainMap;
 var heatMapLayer;
 
+var handler;
+
+var startSimulateStream = function() {
+  handler = Meteor.setInterval(function() {
+    render();
+  }, 1000);
+}
+
+var stopSimulateStream = function() {
+  Meteor.clearInterval(handler);
+}
+
+var renderWithFeed = function(feed) {
+  _.extend(feed, Frame);
+  renderMap(feed);
+  renderCanvas(feed);
+}
+
 var renderMap = function(frame) {
   // clear previous
   if (heatMapLayer) {
@@ -57,9 +75,21 @@ Meteor.startup(function() {
 });
 
 Template.body.onCreated(function() {
+  var self = this;
   // We can use the `ready` callback to interact with the map API once the map is ready.
   GoogleMaps.ready('mainMap', function(map) {
     mainMap = map;
+
+    self.autorun(function() {
+      Feed.find().observe({
+        added(feed) {
+          renderWithFeed(feed);
+        },
+        changed(feed) {
+          renderWithFeed(feed);
+        }
+      });
+    });
   });
 });
 
@@ -80,5 +110,11 @@ Template.body.helpers({
 Template.body.events({
   "click #render-button": function() {
     render();
+  },
+  "click #start-button": function() {
+    startSimulateStream();
+  },
+  "click #stop-button": function() {
+    stopSimulateStream();
   }
 });
