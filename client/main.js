@@ -30,7 +30,7 @@ var renderMap = function(frame) {
     heatMapLayers[key].setMap(null);
   }
   var mapped = frame.mapData();
-  console.log("mapped: ", mapped);
+  // console.log("mapped: ", mapped);
 
   var issueData = [];
   for (var index = 0; index < frame.width * frame.height; index++) {
@@ -41,7 +41,7 @@ var renderMap = function(frame) {
       });
     }
   }
-  console.log("issueData: ", issueData.length);
+  // console.log("issueData: ", issueData.length);
   var issueArray = new google.maps.MVCArray(issueData);
   heatMapLayers[key] = new google.maps.visualization.HeatmapLayer({
     data: issueArray,

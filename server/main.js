@@ -31,7 +31,6 @@ var observeEvent = function() {
     firebaseRef.on('value', Meteor.bindEnvironment(function(snapshot) {
       var val = snapshot.val();
       if (!val) return;
-      console.log("new feed");
       var key = firebaseRef.toString();
       _.extend(val, {key: key});
       Feed.upsert({key: key}, {
