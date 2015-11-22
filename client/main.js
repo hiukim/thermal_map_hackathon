@@ -1,5 +1,5 @@
-START_LAT = 22.282464;
-START_LNG = 114.190497;
+START_LAT = 22.490336;
+START_LNG = 114.183572;
 
 var mainMap;
 var heatMapLayers = {};

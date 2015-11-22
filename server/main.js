@@ -7,8 +7,8 @@ var firebaseFeeds = [
   FIREBASE_URL + "feed3"
 ]
 
-START_LATITUDE = 22.282464;
-START_LONGITUDE = 114.190497;
+START_LATITUDE = 22.490336;
+START_LONGITUDE = 114.183572;
 START_ALTITUDE = 400; // meter
 var simulateEvent = function() {
   var firebaseRef = new Firebase(firebaseFeeds[0]);
